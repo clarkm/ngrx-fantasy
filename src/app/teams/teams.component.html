@@ -1,0 +1,35 @@
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label class="col-md-4">Team Name</label>
+                <input type="text" class="form-control" #teamName />
+            </div>
+            <div class="form-group">
+                <button (click)="createTeam(teamName.value, $event)" class="btn btn-primary">Add Team</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover" *ngIf="teams">
+    <thead>
+        <tr>
+            <td>name</td>
+            <td>players</td>
+            <td>remove</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let team of teams | async" (click)="changeTeam(team)">
+            <td>{{team.name}}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let player of team.players">{{player | json}} -- <span
+                            (click)="removePlayerFromTeam(player, $event)">REMOVE</span> </li>
+                </ul>
+            </td>
+            <td (click)="removeTeam(team.name, $event)">XX</td>
+        </tr>
+    </tbody>
+</table>
