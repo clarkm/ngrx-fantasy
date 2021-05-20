@@ -54,6 +54,7 @@ export class DraftPoolComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentActiveTeam$ = this.currentTeamService.currentSelectedTeamSource
       .subscribe(currentActiveTeam => this.currentActiveTeam = currentActiveTeam)
+      this.store.dispatch({ type: '[Draft pool] Load Players' });
   }
 
   ngOnDestroy() {
