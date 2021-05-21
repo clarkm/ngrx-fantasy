@@ -21,13 +21,19 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let team of teams | async" (click)="changeTeam(team)">
+        <tr *ngFor="let team of teams | async" (click)="selectTeam(team)">
             <td>{{team.name}}</td>
             <td>
-                <ul>
-                    <li *ngFor="let player of team.players">{{player | json}} -- <span
-                            (click)="removePlayerFromTeam(player, $event)">REMOVE</span> </li>
-                </ul>
+                <table>
+                    <tr *ngFor="let player of team.players">
+                        <td>{{player.rank}}</td>
+                        <td>{{player.name}}</td>
+                        <td>{{player.pos}}</td>
+                        <td>{{player.team}}</td>
+                        <td>{{player.bye}}</td>
+                        <td (click)="removePlayerFromTeam(player, $event)">RM</td>
+                    </tr>
+                </table>
             </td>
             <td (click)="removeTeam(team.name, $event)">XX</td>
         </tr>

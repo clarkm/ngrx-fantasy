@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Team } from './team.model';
 import { AppState } from './../app.state';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { CurrentTeamService } from '../current-team.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-teams',
@@ -12,12 +11,9 @@ import { CurrentTeamService } from '../current-team.service';
 })
 export class TeamsComponent implements OnInit, OnDestroy {
   teams: Observable<any>;
-  currentActiveTeam;
-  currentActiveTeam$: Subscription;
 
   constructor(
     private store: Store<AppState>,
-    private currentTeamService: CurrentTeamService
   ) {
     this.teams = this.store.select(state => state.teams);
   }
@@ -51,7 +47,6 @@ export class TeamsComponent implements OnInit, OnDestroy {
       type: 'REMOVE_PLAYER_FROM_TEAM',
       payload: {
         player: player,
-        teamName: this.currentActiveTeam.name
       }
     });
     // add it back to the draftPool here too
@@ -63,18 +58,19 @@ export class TeamsComponent implements OnInit, OnDestroy {
     })
   }
 
-  changeTeam(team) {
-    console.log('changed team: ', team);
-    this.currentTeamService.changeSelectedTeam(team);
+  selectTeam(team) {
+    this.store.dispatch({
+      type: '[TEAMS COMPONENT] SELECT_TEAM',
+      payload: {
+        teamName: team.name
+      }
+    })
+
   }
 
   ngOnInit() {
-    this.currentActiveTeam$ = this.currentTeamService.currentSelectedTeamSource.subscribe(
-      currentActiveTeam => (this.currentActiveTeam = currentActiveTeam)
-    );
   }
 
   ngOnDestroy() {
-    this.currentActiveTeam$.unsubscribe();
   }
 }

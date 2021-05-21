@@ -9,9 +9,6 @@ export function draftPoolReducer(masterListOfPlayers = [], action) {
 
         case 'ADD_PLAYER_TO_DRAFT_POOL':
             return [...masterListOfPlayers, action.payload.player]
-       
-        case 'REMOVE_PLAYER_FROM_DRAFT_POOL':
-            return masterListOfPlayers.filter(player => player.name !== action.payload.player.name)
     
         default:
             return masterListOfPlayers

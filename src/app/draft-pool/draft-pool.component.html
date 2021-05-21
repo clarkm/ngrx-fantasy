@@ -1,8 +1,11 @@
 draft pool:
 
 <table>
-    <tr *ngFor="let player of draftPool | async">
-        <td (click)="addPlayerToTeam(player, $event)">{{player.name }}</td>
-        <td (click)="removePlayerFromDraftPool(player, $event)">XX</td>
+    <tr *ngFor="let player of draftPool | async" (click)="addPlayerToTeam(player, $event)">
+        <td>{{player.rank}}</td>
+        <td>{{player.name}}</td>
+        <td>{{player.pos}}</td>
+        <td>{{player.team}}</td>
+        <td>{{player.bye}}</td>
     </tr>
 </table>
