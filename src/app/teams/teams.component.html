@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let team of teams | async" (click)="selectTeam(team)">
+        <tr *ngFor="let team of teams | async" (click)="selectTeam(team)" [ngStyle]="{'background': team.selected ? 'yellowgreen' : 'none' }">
             <td>{{team.name}}</td>
             <td>
                 <table>
@@ -35,7 +35,7 @@
                     </tr>
                 </table>
             </td>
-            <td (click)="removeTeam(team.name, $event)">XX</td>
+            <td (click)="removeTeam(team, $event)">XX</td>
         </tr>
     </tbody>
 </table>

@@ -55,7 +55,7 @@ export function teamsReducer(listOfTeams = [], action) {
     case 'CREATE_TEAM':
       return [
         ...listOfTeams,
-        { name: action.payload.name, players: action.payload.players }
+        { name: action.payload.name, players: action.payload.players, selected: null }
       ];
 
     case 'REMOVE_TEAM':

@@ -30,12 +30,21 @@ export class TeamsComponent implements OnInit, OnDestroy {
     });
   }
 
-  removeTeam(name, e) {
+  removeTeam(team, e) {
     e.preventDefault();
+    team.players.forEach(player => {
+      // add it back to the draftPool here too
+      this.store.dispatch({
+        type: 'ADD_PLAYER_TO_DRAFT_POOL',
+        payload: {
+          player: player
+        }
+      })
+    });
     this.store.dispatch({
       type: 'REMOVE_TEAM',
       payload: <Team>{
-        name: name,
+        name: team.name,
         players: []
       }
     });
