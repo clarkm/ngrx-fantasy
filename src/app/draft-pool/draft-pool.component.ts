@@ -1,3 +1,4 @@
+import { TeamsComponent } from './../teams/teams.component';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 // import { Team } from './team.model';
 import { AppState } from './../app.state';
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs';
 export class DraftPoolComponent implements OnInit, OnDestroy {
   draftPool: Observable<any>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private teamsComp: TeamsComponent) {
     this.draftPool = this.store.select(state => state.draftPool);
   }
 
@@ -34,6 +35,7 @@ export class DraftPoolComponent implements OnInit, OnDestroy {
         player: player
       }
     });
+    this.teamsComp.selectTeam()
   }
 
   ngOnInit() {
