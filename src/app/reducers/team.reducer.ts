@@ -64,9 +64,13 @@ export function teamsReducer(listOfTeams = [], action) {
       return [...newTeamsForSelection];
 
     case 'CREATE_TEAM':
+      let selected = false;
+      if (!listOfTeams.length) {
+        selected = true;
+      }
       return [
         ...listOfTeams,
-        { name: action.payload.name, players: action.payload.players, selected: null }
+        { name: action.payload.name, players: action.payload.players, selected: selected }
       ];
 
     case 'REMOVE_TEAM':
