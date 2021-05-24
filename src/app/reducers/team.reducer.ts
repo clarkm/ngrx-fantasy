@@ -1,7 +1,6 @@
-import { Team } from './../teams/team.model';
-import { Action } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 
+let moveInReverse = false;
 export function teamsReducer(listOfTeams = [], action) {
   switch (action.type) {
     case 'ADD_PLAYER_TO_TEAM':
@@ -9,19 +8,31 @@ export function teamsReducer(listOfTeams = [], action) {
       for (let i = 0; i < newListOfTeams.length; i++) {
         const e = newListOfTeams[i];
         if (e.selected) {
-          const pIndex = e.players.findIndex(
-            p => p.name === action.payload.player.name
-          );
-          // if (pIndex > -1) {
           e.players.push(action.payload.player);
-          // }
+          const teamIndex = newListOfTeams.findIndex(t => t.selected === true);
+          newListOfTeams[teamIndex].selected = false;
+          if (!moveInReverse) {
+            if ((teamIndex + 1) % newListOfTeams.length === 0) {
+              moveInReverse = true;
+              newListOfTeams[teamIndex].selected = true;
+            } else {
+              newListOfTeams[teamIndex + 1].selected = true;
+            }
+
+          } else {
+            if (teamIndex === 0) {
+              moveInReverse = false;
+              newListOfTeams[teamIndex].selected = true;
+            } else {
+              newListOfTeams[teamIndex - 1].selected = true;
+            }
+          }
+          break
         }
       }
 
       return [...newListOfTeams];
     case 'REMOVE_PLAYER_FROM_TEAM':
-      // the 'selectedPlayer' and 'selectedTeam' are coming from the template -- all it's doing is removing - nothing complex!
-      // NOTE that this has since been refactored to something much better in your react-redux app!
       const newTeamsForRemoval = cloneDeep(listOfTeams);
       for (let i = 0; i < newTeamsForRemoval.length; i++) {
         const e = newTeamsForRemoval[i];
