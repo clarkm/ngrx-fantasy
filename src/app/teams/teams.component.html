@@ -20,7 +20,7 @@
             <td>remove</td>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="display: flex;">
         <tr *ngFor="let team of teams | async" (click)="selectTeam(team)" [ngStyle]="{'background': team.selected ? 'yellowgreen' : 'none' }">
             <td>{{team.name}}</td>
             <td>
