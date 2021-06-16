@@ -1,8 +1,11 @@
+import * as fromDraftPool from './../draft-pool.actions';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 // import { Team } from './team.model';
 import { AppState } from './../app.state';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-draft-pool',
@@ -18,12 +21,14 @@ export class DraftPoolComponent implements OnInit, OnDestroy {
 
   addPlayerToDraftPool(player, e) {
     e.preventDefault();
-    this.store.dispatch({
-      type: 'ADD_PLAYER_TO_DRAFT_POOL',
-      payload: {
-        player: player
-      }
-    });
+    fromDraftPool.addDraftPool(player);
+
+    // this.store.dispatch({
+    //   type: 'ADD_PLAYER_TO_DRAFT_POOL',
+    //   payload: {
+    //     player: player
+    //   }
+    // });
   }
 
   addPlayerToTeam(player, e) {
