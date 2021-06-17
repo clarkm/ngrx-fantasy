@@ -1,21 +1,23 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
-import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
-import { teamsReducer } from './reducers/team.reducer';
-import { draftPoolReducer } from './reducers/draft-pool.reducer';
-import { TeamsComponent } from './teams/teams.component';
-import { DraftPoolComponent } from './draft-pool/draft-pool.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { CurrentTeamService } from './current-team.service';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { DraftPoolComponent } from './draft-pool/draft-pool.component';
 import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { PlayerPoolEffects } from './effects/players-pool.effects';
-
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import {TableModule} from 'primeng/table';
+import { TeamsComponent } from './teams/teams.component';
+import { draftPoolReducer } from './reducers/draft-pool.reducer';
+import { teamsReducer } from './reducers/team.reducer';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, StoreModule.forRoot({teams: teamsReducer, draftPool: draftPoolReducer}),
+  imports: [BrowserModule, HttpClientModule, TableModule, 
+    BrowserModule,
+    BrowserAnimationsModule, StoreModule.forRoot({teams: teamsReducer, draftPool: draftPoolReducer}),
   // Instrumentation must be imported after importing StoreModule (config is optional)
   StoreDevtoolsModule.instrument({
     maxAge: 25, // Retains last 25 states

@@ -1,41 +1,52 @@
 <div class="panel panel-primary">
-    <div class="panel-body">
-        <form>
-            <div class="form-group">
-                <label class="col-md-4">Team Name</label>
-                <input type="text" class="form-control" #teamName />
-            </div>
-            <div class="form-group">
-                <button (click)="createTeam(teamName.value, $event)" class="btn btn-primary">Add Team</button>
-            </div>
-        </form>
-    </div>
+  <div class="panel-body">
+    <form>
+      <div class="form-group">
+        <label class="col-md-4">Team Name</label>
+        <input type="text" class="form-control" #teamName />
+      </div>
+      <div class="form-group">
+        <button
+          (click)="createTeam(teamName.value, $event)"
+          class="btn btn-primary"
+        >
+          Add Team
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
-<table class="table table-hover" *ngIf="teams">
-    <thead>
+<div style="display: flex;flex-wrap: wrap;">
+  <div
+    *ngFor="let team of teams | async"
+    (click)="selectTeam(team)"
+    [ngStyle]="{ background: team.selected ? 'yellowgreen' : 'none' }"
+    style="width: 25%"
+  >
+    <h3>{{ team.name }}</h3>
+    <p-table [value]="team.players">
+      <ng-template pTemplate="header">
         <tr>
-            <td>name</td>
-            <td>players</td>
-            <td>remove</td>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Team</th>
+          <th>Bye</th>
+          <th>RM</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let team of teams | async" (click)="selectTeam(team)" [ngStyle]="{'background': team.selected ? 'yellowgreen' : 'none' }">
-            <td>{{team.name}}</td>
-            <td>
-                <table>
-                    <tr *ngFor="let player of team.players">
-                        <td>{{player.rank}}</td>
-                        <td>{{player.name}}</td>
-                        <td>{{player.pos}}</td>
-                        <td>{{player.team}}</td>
-                        <td>{{player.bye}}</td>
-                        <td (click)="removePlayerFromTeam(player, $event)">RM</td>
-                    </tr>
-                </table>
-            </td>
-            <td (click)="removeTeam(team, $event)">XX</td>
+      </ng-template>
+      <ng-template pTemplate="body" let-player>
+        <tr (click)="addPlayerToTeam(player, $event)">
+          <td>{{ player.rank }}</td>
+          <td>{{ player.name }}</td>
+          <td>{{ player.pos }}</td>
+          <td>{{ player.team }}</td>
+          <td>{{ player.bye }}</td>
+          <td (click)="removePlayerFromTeam(player, $event)">RM</td>
         </tr>
-    </tbody>
-</table>
+      </ng-template>
+    </p-table>
+    <h3 (click)="removeTeam(team, $event)">XX</h3>
+  </div>
+</div>
