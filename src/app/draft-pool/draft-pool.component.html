@@ -1,9 +1,11 @@
+<p-toast position="top-center"></p-toast>
+
 draft pool:
 
-<p-table #dt [value]="draftPool | async" [(selection)]="selectedPlayers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+<p-table #dt [value]="draftPool | async" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="false"
     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [filterDelay]="0" [globalFilterFields]="['rank','name','pos','team','bye']"  (sortFunction)="customSort($event)" [customSort]="true">
+    [filterDelay]="0" [globalFilterFields]="['rank','name','pos','team','bye']">
     <ng-template pTemplate="caption">
         <div class="table-header">
             List of players
